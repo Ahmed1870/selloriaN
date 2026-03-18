@@ -3,29 +3,38 @@ import { createBrowserClient, createServerClient } from '@supabase/ssr'
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
+// دالة الكلاينت (للفرويت إيند)
 export function createClient() {
   return createBrowserClient(supabaseUrl, supabaseAnonKey)
 }
 
+// دالة السيرفر (دي اللي كانت مسببة المشكلة)
 export async function createServerSupabaseClient() {
   const { cookies } = await import('next/headers')
-  const cookieStore = await cookies()
+  const cookieStore = cookies() // في نكست 14 الـ cookies() مش محتاجة await في أغلب الحالات
+  
   return createServerClient(supabaseUrl, supabaseAnonKey, {
     cookies: {
-      getAll() {
-        return cookieStore.getAll()
+      get(name: string) {
+        return cookieStore.get(name)?.value
       },
-      setAll(cookiesToSet) {
+      set(name: string, value: string, options: any) {
         try {
-          cookiesToSet.forEach(({ name, value, options }) =>
-            cookieStore.set(name, value, options)
-          )
-        } catch {}
+          cookieStore.set({ name, value, ...options })
+        } catch (error) {
+          // الـ Server Components مبيسمحش بالـ set للهيدرز، بنعملها pass عادي
+        }
+      },
+      remove(name: string, options: any) {
+        try {
+          cookieStore.set({ name, value: '', ...options })
+        } catch (error) {}
       },
     },
   })
 }
 
+// دالة الأدمن (للعمليات الحساسة)
 export function createAdminClient() {
   const { createClient: createSupabaseClient } = require('@supabase/supabase-js')
   return createSupabaseClient(
@@ -33,4 +42,4 @@ export function createAdminClient() {
     process.env.SUPABASE_SERVICE_ROLE_KEY!,
     { auth: { autoRefreshToken: false, persistSession: false } }
   )
-}
+             }
