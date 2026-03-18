@@ -1,5 +1,4 @@
 'use client'
-// components/layout/Navbar.tsx
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { ShoppingCart, Search, Menu, X, User, LogOut, LayoutDashboard } from 'lucide-react'
@@ -19,113 +18,75 @@ export function Navbar() {
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
       setUser(data.user)
-      if (data.user) {
-        supabase
-          .from('profiles')
-          .select('*')
-          .eq('id', data.user.id)
-          .single()
-          .then(({ data: p }) => setProfile(p))
-      }
+      if (data.user) supabase.from('profiles').select('*').eq('id', data.user.id).single().then(({ data: p }) => setProfile(p))
     })
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
-      setUser(session?.user ?? null)
-    })
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => setUser(session?.user ?? null))
     return () => subscription.unsubscribe()
   }, [])
 
-  const handleSignOut = async () => {
-    await supabase.auth.signOut()
-    setUser(null)
-    setProfile(null)
-  }
+  const handleSignOut = async () => { await supabase.auth.signOut(); setUser(null); setProfile(null) }
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-100 shadow-sm">
+    <nav className="sticky top-0 z-50 bg-white" style={{borderBottom: '1px solid var(--border)', boxShadow: '0 1px 3px rgba(0,0,0,0.04)'}}>
       <div className="container-main">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-14">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-blue-800 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">S</span>
-            </div>
-            <span className="text-xl font-bold text-blue-800">Selloria</span>
+          <Link href="/" className="flex items-center gap-2 group">
+            <div className="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-sm text-white transition-transform group-hover:scale-105" style={{background: 'var(--primary)'}}>S</div>
+            <span className="font-bold text-base" style={{color: 'var(--text)'}}>Selloria</span>
           </Link>
 
-          {/* Search Bar - Desktop */}
-          <div className="hidden md:flex flex-1 max-w-md mx-8">
+          {/* Search */}
+          <div className="hidden md:flex flex-1 max-w-sm mx-6">
             <div className="relative w-full">
               <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-              <input
-                type="text"
-                placeholder="ابحث عن منتجات..."
-                value={searchQuery}
+              <input type="text" placeholder="ابحث عن منتجات..." value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && (window.location.href = `/products?q=${searchQuery}`)}
-                className="w-full pr-10 pl-4 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
+                className="input pr-10 py-2 text-sm" />
             </div>
           </div>
 
-          {/* Nav Links - Desktop */}
-          <div className="hidden md:flex items-center gap-2">
-            <Link href="/products" className="text-slate-600 hover:text-blue-800 font-medium px-3 py-2 rounded-lg hover:bg-blue-50 transition-colors">
-              المنتجات
-            </Link>
-
+          {/* Links */}
+          <div className="hidden md:flex items-center gap-1">
+            <Link href="/products" className="nav-link text-sm">المنتجات</Link>
             {user ? (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1">
                 {profile?.is_admin && (
-                  <Link href="/admin" className="flex items-center gap-1.5 text-blue-800 font-medium px-3 py-2 rounded-lg hover:bg-blue-50 transition-colors">
-                    <LayoutDashboard className="w-4 h-4" />
-                    <span>الإدارة</span>
+                  <Link href="/admin" className="nav-link text-sm" style={{color: 'var(--primary)'}}>
+                    <LayoutDashboard className="w-4 h-4" />الإدارة
                   </Link>
                 )}
-                <Link href="/account" className="flex items-center gap-1.5 text-slate-600 hover:text-blue-800 font-medium px-3 py-2 rounded-lg hover:bg-blue-50 transition-colors">
-                  <User className="w-4 h-4" />
-                  <span className="max-w-24 truncate">{profile?.full_name || 'حسابي'}</span>
+                <Link href="/account" className="nav-link text-sm">
+                  <User className="w-4 h-4" />{profile?.full_name?.split(' ')[0] || 'حسابي'}
                 </Link>
-                <button
-                  onClick={handleSignOut}
-                  className="flex items-center gap-1.5 text-slate-500 hover:text-red-600 px-3 py-2 rounded-lg hover:bg-red-50 transition-colors"
-                >
+                <button onClick={handleSignOut} className="nav-link text-sm" style={{color: 'var(--danger)'}}>
                   <LogOut className="w-4 h-4" />
                 </button>
               </div>
             ) : (
               <div className="flex items-center gap-2">
-                <Link href="/auth/login" className="text-slate-600 hover:text-blue-800 font-medium px-3 py-2">
-                  تسجيل الدخول
-                </Link>
-                <Link href="/auth/register" className="btn-primary py-2 text-sm">
-                  إنشاء حساب
-                </Link>
+                <Link href="/auth/login" className="nav-link text-sm">دخول</Link>
+                <Link href="/auth/register" className="btn-primary py-2 text-sm px-4">ابدأ مجاناً</Link>
               </div>
             )}
-
-            {/* Cart */}
-            <Link href="/cart" className="relative flex items-center justify-center w-10 h-10 rounded-xl hover:bg-slate-100 transition-colors">
-              <ShoppingCart className="w-5 h-5 text-slate-700" />
+            <Link href="/cart" className="relative nav-link">
+              <ShoppingCart className="w-5 h-5" />
               {cart.count > 0 && (
-                <span className="absolute -top-1 -left-1 w-5 h-5 bg-blue-800 text-white text-xs font-bold rounded-full flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 w-4 h-4 text-xs font-bold rounded-full flex items-center justify-center text-white" style={{background: 'var(--primary)'}}>
                   {cart.count > 9 ? '9+' : cart.count}
                 </span>
               )}
             </Link>
           </div>
 
-          {/* Mobile: Cart + Menu */}
+          {/* Mobile */}
           <div className="flex md:hidden items-center gap-2">
-            <Link href="/cart" className="relative flex items-center justify-center w-10 h-10">
-              <ShoppingCart className="w-5 h-5 text-slate-700" />
-              {cart.count > 0 && (
-                <span className="absolute -top-1 -left-1 w-5 h-5 bg-blue-800 text-white text-xs font-bold rounded-full flex items-center justify-center">
-                  {cart.count}
-                </span>
-              )}
+            <Link href="/cart" className="relative nav-link p-2">
+              <ShoppingCart className="w-5 h-5" />
+              {cart.count > 0 && <span className="absolute -top-0.5 -right-0.5 w-4 h-4 text-xs font-bold rounded-full flex items-center justify-center text-white" style={{background: 'var(--primary)'}}>{cart.count}</span>}
             </Link>
-            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="w-10 h-10 flex items-center justify-center">
+            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="nav-link p-2">
               {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
@@ -133,28 +94,22 @@ export function Navbar() {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-slate-100 animate-fade-in space-y-2">
+          <div className="md:hidden py-3 animate-fade-up space-y-1" style={{borderTop: '1px solid var(--border)'}}>
             <div className="relative mb-3">
               <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-              <input
-                type="text"
-                placeholder="ابحث..."
-                className="w-full pr-10 pl-4 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
+              <input type="text" placeholder="ابحث..." className="input pr-10 py-2 text-sm" />
             </div>
-            <Link href="/products" className="block py-2.5 px-3 rounded-lg hover:bg-slate-50 font-medium text-slate-700" onClick={() => setIsMenuOpen(false)}>المنتجات</Link>
+            <Link href="/products" className="nav-link" onClick={() => setIsMenuOpen(false)}>المنتجات</Link>
             {user ? (
               <>
-                {profile?.is_admin && (
-                  <Link href="/admin" className="block py-2.5 px-3 rounded-lg hover:bg-slate-50 font-medium text-blue-800" onClick={() => setIsMenuOpen(false)}>لوحة الإدارة</Link>
-                )}
-                <Link href="/account" className="block py-2.5 px-3 rounded-lg hover:bg-slate-50 font-medium text-slate-700" onClick={() => setIsMenuOpen(false)}>حسابي</Link>
-                <button onClick={handleSignOut} className="block w-full text-right py-2.5 px-3 rounded-lg hover:bg-red-50 font-medium text-red-600">تسجيل الخروج</button>
+                {profile?.is_admin && <Link href="/admin" className="nav-link" style={{color: 'var(--primary)'}} onClick={() => setIsMenuOpen(false)}>لوحة الإدارة</Link>}
+                <Link href="/account" className="nav-link" onClick={() => setIsMenuOpen(false)}>حسابي</Link>
+                <button onClick={handleSignOut} className="nav-link w-full text-right" style={{color: 'var(--danger)'}}>تسجيل الخروج</button>
               </>
             ) : (
               <>
-                <Link href="/auth/login" className="block py-2.5 px-3 rounded-lg hover:bg-slate-50 font-medium text-slate-700" onClick={() => setIsMenuOpen(false)}>تسجيل الدخول</Link>
-                <Link href="/auth/register" className="block py-2.5 px-3 rounded-lg bg-blue-800 text-white font-medium text-center" onClick={() => setIsMenuOpen(false)}>إنشاء حساب</Link>
+                <Link href="/auth/login" className="nav-link" onClick={() => setIsMenuOpen(false)}>تسجيل الدخول</Link>
+                <Link href="/auth/register" className="btn-primary w-full justify-center mt-2" onClick={() => setIsMenuOpen(false)}>ابدأ مجاناً</Link>
               </>
             )}
           </div>
