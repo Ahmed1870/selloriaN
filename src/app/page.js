@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Hero from "../components/landing/Hero";
+import LaunchFireworks from "../components/effects/LaunchFireworks";
 import PricingPlans from "../components/billing/PricingPlans";
 import AffiliateHub from "../components/affiliate/AffiliateHub";
 import SealOfTrust from "../components/merchant/SealOfTrust";
@@ -24,6 +25,7 @@ export default function Home() {
 
   return (
     <main className="bg-black min-h-screen text-right" dir="rtl">
+      <LaunchFireworks />
       {/* زرار مخفي للقائد فقط للدخول السريع */}
       <div className="fixed top-4 left-4 z-[200]">
          <button 
