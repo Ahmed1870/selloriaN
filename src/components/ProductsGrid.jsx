@@ -1,83 +1,49 @@
 "use client";
 import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import { supabase } from '../lib/supabaseClient';
-
-const categories = ['الكل', 'ملابس', 'إلكترونيات', 'أحذية', 'أخرى'];
 
 export default function ProductsGrid({ onAddToCart }) {
   const [products, setProducts] = useState([]);
-  const [filtered, setFiltered] = useState([]);
-  const [search, setSearch] = useState('');
-  const [activeCat, setActiveCat] = useState('الكل');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      const { data } = await supabase.from('products').select('*').order('created_at', { ascending: false });
+    const fetch = async () => {
+      const { data } = await supabase.from('products').select('*');
       setProducts(data || []);
-      setFiltered(data || []);
       setLoading(false);
     };
-    fetchProducts();
+    fetch();
   }, []);
 
-  // محرك البحث والفلترة
-  useEffect(() => {
-    let result = products;
-    if (activeCat !== 'الكل') {
-      result = result.filter(p => p.category === activeCat);
-    }
-    if (search) {
-      result = result.filter(p => p.name.toLowerCase().includes(search.toLowerCase()));
-    }
-    setFiltered(result);
-  }, [search, activeCat, products]);
-
-  if (loading) return <div style={{textAlign:'center', color:'#39FF14', padding:'50px'}}>براد الشاي بيغلي والبضاعة بتتحمل... ☕</div>;
+  if (loading) return <div style={{textAlign:'center', padding:'100px', color:'#39FF14'}}>جاري تحضير الواجهة الفخمة... ✨</div>;
 
   return (
-    <div style={{ padding: '10px' }}>
-      {/* شريط البحث */}
-      <input 
-        placeholder="بتدور على إيه؟ 🔍" 
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        style={{ width: '100%', padding: '15px', background: '#111', border: '1px solid #222', color: '#fff', borderRadius: '15px', marginBottom: '15px' }}
-      />
-
-      {/* أقسام المنتجات */}
-      <div style={{ display: 'flex', gap: '10px', overflowX: 'auto', marginBottom: '20px', paddingBottom: '5px' }}>
-        {categories.map(cat => (
-          <button 
-            key={cat}
-            onClick={() => setActiveCat(cat)}
-            style={{ 
-              padding: '8px 20px', 
-              borderRadius: '20px', 
-              border: 'none', 
-              whiteSpace: 'nowrap',
-              background: activeCat === cat ? '#39FF14' : '#111', 
-              color: activeCat === cat ? '#000' : '#888',
-              fontWeight: 'bold',
-              transition: '0.3s'
-            }}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
-
-      {/* عرض المنتجات */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
-        {filtered.length > 0 ? filtered.map(p => (
-          <div key={p.id} style={{ background: '#111', border: '1px solid #222', padding: '10px', borderRadius: '20px', textAlign: 'center' }}>
-            <img src={p.image_url || 'https://via.placeholder.com/150'} style={{ width: '100%', height: '110px', objectFit: 'cover', borderRadius: '15px' }} />
-            <h3 style={{ color: '#fff', fontSize: '13px', margin: '8px 0', height: '35px', overflow: 'hidden' }}>{p.name}</h3>
-            <p style={{ color: '#39FF14', fontWeight: 'bold' }}>{p.price} ج.م</p>
-            <button onClick={() => onAddToCart(p)} style={{ background: '#222', color: '#39FF14', border: '1px solid #39FF14', padding: '8px', borderRadius: '10px', width: '100%', fontWeight: 'bold', fontSize: '12px' }}>إضافة +</button>
+    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', padding: '15px' }}>
+      {products.map((p, i) => (
+        <motion.div 
+          key={p.id}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: i * 0.1 }}
+          className="glass-card"
+          style={{ padding: '10px', textAlign: 'center' }}
+        >
+          <div style={{ position: 'relative', borderRadius: '15px', overflow: 'hidden' }}>
+            <img src={p.image_url || 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=200'} 
+                 style={{ width: '100%', height: '140px', objectFit: 'cover' }} />
           </div>
-        )) : <p style={{gridColumn:'1/3', textAlign:'center', color:'#666', padding:'20px'}}>مفيش بضاعة بالاسم ده حالياً.. 🤷‍♂️</p>}
-      </div>
+          <h3 style={{ fontSize: '14px', margin: '10px 0', fontWeight: '500' }}>{p.name}</h3>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 5px' }}>
+             <span style={{ color: '#39FF14', fontWeight: 'bold' }}>{p.price}ج</span>
+             <motion.button 
+               whileTap={{ scale: 0.9 }}
+               onClick={() => onAddToCart(p)}
+               style={{ background: '#39FF14', border: 'none', borderRadius: '50%', width: '30px', height: '30px', color: '#000', fontWeight: 'bold' }}
+             >+</motion.button>
+          </div>
+        </motion.div>
+      ))}
     </div>
   );
 }
