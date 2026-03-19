@@ -23,6 +23,7 @@ export default function LandingPage() {
 
       <div className="relative z-10">
         {/* Navigation */}
+import StreetPulse from "../components/ui/StreetPulse";
         <nav className="p-8 flex justify-between items-center max-w-7xl mx-auto">
           <motion.h1 
             initial={{ x: -20, opacity: 0 }}
@@ -36,6 +37,7 @@ export default function LandingPage() {
              <button className="bg-white/10 backdrop-blur-md px-6 py-2 rounded-full text-sm font-bold border border-white/20 hover:bg-white/20 transition-all text-white">ابدأ الآن</button>
           </div>
         </nav>
+      <StreetPulse />
 
         {/* Hero Section */}
 import MerchantLeaderboard from "../components/rankings/MerchantLeaderboard";
