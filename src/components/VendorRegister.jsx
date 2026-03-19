@@ -1,68 +1,20 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { FaStore, FaWhatsapp, FaUserCircle } from 'react-icons/fa';
+import React from 'react';
 
 const VendorRegister = () => {
-  const [vendorData, setVendorData] = useState({ name: '', store: '', whatsapp: '' });
-
-  const handleRegister = (e) => {
-    e.preventDefault();
-    alert('مبروك! حسابك كتاجر في سيلوريا جاهز.. ابدأ برفع منتجاتك الآن.');
-  };
-
   return (
-    <div className="min-h-screen bg-[#0a0a0a] pt-32 px-6 text-white">
-      <motion.div 
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="max-w-md mx-auto bg-white/5 backdrop-blur-2xl border border-[#39FF14]/20 rounded-[35px] p-10 shadow-[0_0_50px_rgba(0,0,0,0.5)]"
-      >
-        <div className="text-center mb-10">
-          <div className="inline-block p-4 bg-[#39FF14]/10 rounded-2xl mb-4">
-            <FaStore className="text-[#39FF14] text-4xl" />
-          </div>
-          <h2 className="text-2xl font-black uppercase tracking-widest">انضم كتاجر <span className="text-[#39FF14]">Partner</span></h2>
-          <p className="text-gray-500 text-sm mt-2">ابدأ بيع منتجاتك بذكاء في سيلوريا</p>
-        </div>
-
-        <form onSubmit={handleRegister} className="space-y-6">
-          <div className="relative">
-            <FaUserCircle className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
-            <input 
-              type="text" 
-              placeholder="اسم التاجر"
-              className="w-full bg-black/40 border border-white/10 rounded-2xl py-4 pl-12 pr-6 focus:border-[#39FF14] outline-none"
-              onChange={(e) => setVendorData({...vendorData, name: e.target.value})}
-            />
-          </div>
-          <div className="relative">
-            <FaStore className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
-            <input 
-              type="text" 
-              placeholder="اسم المحل / البراند"
-              className="w-full bg-black/40 border border-white/10 rounded-2xl py-4 pl-12 pr-6 focus:border-[#39FF14] outline-none"
-              onChange={(e) => setVendorData({...vendorData, store: e.target.value})}
-            />
-          </div>
-          <div className="relative">
-            <FaWhatsapp className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
-            <input 
-              type="number" 
-              placeholder="رقم الواتساب (للأوردرات)"
-              className="w-full bg-black/40 border border-white/10 rounded-2xl py-4 pl-12 pr-6 focus:border-[#39FF14] outline-none"
-              onChange={(e) => setVendorData({...vendorData, whatsapp: e.target.value})}
-            />
-          </div>
-
-          <motion.button 
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="w-full bg-[#39FF14] text-black font-black py-5 rounded-2xl uppercase tracking-widest mt-4"
-          >
-            إنشاء حساب التاجر
-          </motion.button>
+    <div style={{ backgroundColor: '#0a0a0a', minHeight: '100vh', color: 'white', paddingTop: '100px', paddingLeft: '20px', paddingRight: '20px' }}>
+      <div style={{ maxWidth: '400px', margin: '0 auto', backgroundColor: '#111', padding: '30px', borderRadius: '20px', border: '1px solid #333', textAlign: 'center' }}>
+        <h2 style={{ color: '#39FF14', fontWeight: '900', fontSize: '24px', marginBottom: '20px' }}>انضم كتاجر في سيلوريا</h2>
+        <form style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+          <input type="text" placeholder="الاسم بالكامل" style={{ padding: '15px', borderRadius: '10px', backgroundColor: '#000', color: '#fff', border: '1px solid #39FF14' }} />
+          <input type="email" placeholder="البريد الإلكتروني" style={{ padding: '15px', borderRadius: '10px', backgroundColor: '#000', color: '#fff', border: '1px solid #333' }} />
+          <input type="password" placeholder="كلمة المرور" style={{ padding: '15px', borderRadius: '10px', backgroundColor: '#000', color: '#fff', border: '1px solid #333' }} />
+          <button type="button" style={{ padding: '15px', borderRadius: '10px', backgroundColor: '#39FF14', color: '#000', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+            إنشاء الحساب
+          </button>
         </form>
-      </motion.div>
+        <p style={{ marginTop: '20px', fontSize: '12px', color: '#666' }}>لديك حساب؟ <span style={{ color: '#39FF14' }}>تسجيل الدخول</span></p>
+      </div>
     </div>
   );
 };
