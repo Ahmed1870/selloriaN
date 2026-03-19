@@ -39,8 +39,10 @@ export default function LandingPage() {
 
         {/* Hero Section */}
 import MerchantLeaderboard from "../components/rankings/MerchantLeaderboard";
+import LiveMap from "../components/analytics/LiveMap";
 
       <MerchantLeaderboard />
+      <LiveMap />
 
         <main className="max-w-7xl mx-auto px-6 pt-24 pb-48 text-center">
           <motion.div 
