@@ -1,15 +1,23 @@
-import React from 'react';
+"use client";
+import React, { useEffect, useState } from 'react';
 
-function App() {
+export default function App() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return <div style={{background: '#000', minHeight: '100vh'}} />;
+
   return (
-    <div style={{ backgroundColor: '#000', color: '#39FF14', height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', margin: 0 }}>
-      <h1 style={{ fontSize: '50px', fontWeight: '900' }}>SELLORIA BLACK</h1>
-      <p style={{ color: '#fff' }}>Version: 4.0.0 (Hard Reset)</p>
-      <div style={{ marginTop: '20px', padding: '20px', border: '2px solid #39FF14', borderRadius: '20px' }}>
-         جارٍ تحديث النظام بالكامل...
+    <div style={{ backgroundColor: '#000', color: '#39FF14', height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+      <h1 style={{ fontSize: '40px', fontWeight: '900' }}>SELLORIA DARK FIX</h1>
+      <p style={{ color: '#fff' }}>Build Error Fixed 🚀</p>
+      <div style={{ marginTop: '20px', padding: '20px', border: '1px solid #39FF14', borderRadius: '15px' }}>
+         النظام الآن يعمل بالكامل بالوضع الداكن
       </div>
-      <style>{"body { background-color: #000 !important; margin: 0; padding: 0; }"}</style>
+      <style>{"body { background-color: #000 !important; margin: 0; }"}</style>
     </div>
   );
 }
-export default App;
