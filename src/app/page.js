@@ -2,6 +2,7 @@
 import Hero from "../components/landing/Hero";
 import UserReviews from "../components/reviews/UserReviews";
 import SmartFAQ from "../components/support/SmartFAQ";
+import SuccessPage from "../components/checkout/SuccessPage";
 import PricingPlans from "../components/billing/PricingPlans";
 import AffiliateHub from "../components/affiliate/AffiliateHub";
 import SealOfTrust from "../components/merchant/SealOfTrust";
