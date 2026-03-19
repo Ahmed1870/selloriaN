@@ -4,6 +4,7 @@ import UserReviews from "../components/reviews/UserReviews";
 import SmartFAQ from "../components/support/SmartFAQ";
 import MerchantWallet from "../components/merchant/MerchantWallet";
 import PayoutManager from "../components/admin/PayoutManager";
+import MonthlyReports from "../components/admin/MonthlyReports";
 import SuccessPage from "../components/checkout/SuccessPage";
 import PricingPlans from "../components/billing/PricingPlans";
 import AffiliateHub from "../components/affiliate/AffiliateHub";
@@ -26,6 +27,7 @@ export default function Home() {
       <SmartFAQ />
       <MerchantWallet balance={42500} />
       <PayoutManager />
+      <MonthlyReports />
       </div>
     </main>
   );
