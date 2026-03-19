@@ -1,24 +1,42 @@
-export default function Home() {
-  return (
-    <main className="min-h-screen bg-black flex flex-col items-center justify-center p-6 font-sans select-none" dir="rtl">
-      <div className="text-[#39FF14] font-black text-2xl tracking-tighter mb-12">SELLORIA</div>
-      
-      <h1 className="text-white text-5xl md:text-7xl font-black text-center mb-6 leading-tight">
-        تجارة ذكية. <br/> <span className="text-gray-600">بكل بساطة.</span>
-      </h1>
-      
-      <p className="text-gray-500 text-center max-w-sm mb-12 text-sm leading-relaxed">
-        المنصة المصرية الأولى للربط بين التجار والمناديب والعملاء بذكاء اصطناعي.
-      </p>
+"use client";
+import React, { useEffect, useState } from 'react';
+import { supabase } from '../lib/supabase';
 
-      <div className="flex flex-col sm:flex-row gap-4 w-full max-w-xs">
-        <button className="bg-[#39FF14] text-black h-14 rounded-2xl font-black text-sm hover:scale-105 transition-all">تصفح المتجر</button>
-        <button className="border border-white/10 text-white h-14 rounded-2xl font-black text-sm hover:bg-white/5 transition-all">بيع معنا</button>
-      </div>
-      
-      <footer className="fixed bottom-8 text-gray-800 text-[10px] tracking-[0.2em] uppercase">
-        Future of E-commerce in Egypt
-      </footer>
+export default function Home() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    // اختبار سحب البيانات من "المخ"
+    const fetchProducts = async () => {
+      const { data, error } = await supabase.from('products').select('*').limit(4);
+      if (!error) setProducts(data);
+    };
+    fetchProducts();
+  }, []);
+
+  return (
+    <main className="min-h-screen bg-[#050505] text-white font-sans antialiased" dir="rtl">
+      {/* Navbar شيك */}
+      <nav className="fixed top-0 w-full z-50 backdrop-blur-md bg-black/50 border-b border-white/5">
+        <div className="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+          <span className="text-2xl font-black tracking-tighter text-[#39FF14]">SELLORIA</span>
+        </div>
+      </nav>
+
+      {/* عرض المنتجات من الباك إند */}
+      <section className="pt-48 pb-32 px-6 max-w-7xl mx-auto">
+        <h2 className="text-4xl font-black mb-12">منتجات مختارة ✨</h2>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          {products.length > 0 ? products.map(product => (
+            <div key={product.id} className="bg-white/5 p-6 rounded-[32px] border border-white/10">
+              <h3 className="font-bold">{product.name}</h3>
+              <p className="text-[#39FF14] font-black mt-2">{product.price} ج.م</p>
+            </div>
+          )) : (
+            <p className="text-gray-600 italic">في انتظار أول تاجر يعرض بضاعته...</p>
+          )}
+        </div>
+      </section>
     </main>
   );
 }
