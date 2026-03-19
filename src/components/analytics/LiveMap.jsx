@@ -3,7 +3,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 export default function LiveMap() {
-  const regions = [
+  const regions = [ { id: "cairo", name: "القاهرة", activity: 85, color: "#39FF14" }, { id: "alex", name: "الإسكندرية", activity: 75, color: "#00D1FF" },
     { id: 'faisal', name: 'فيصل', activity: 95, color: '#39FF14' },
     { id: 'haram', name: 'الهرم', activity: 70, color: '#00D1FF' },
     { id: 'talbia', name: 'الطالبية', activity: 40, color: '#FFD700' },
