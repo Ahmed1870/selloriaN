@@ -1,53 +1,54 @@
 "use client";
 import React, { useState } from 'react';
-import { supabase } from '../../lib/supabaseClient';
 
 export default function AddProductQuick({ onBack }) {
-  const [productName, setProductName] = useState('');
-  const [sellingPrice, setSellingPrice] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [name, setName] = useState('');
+  const [desc, setDesc] = useState('');
+  const [insight, setInsight] = useState('');
+  const [loadingAi, setLoadingAi] = useState(false);
 
-  const handlePublish = async () => {
-    if(!productName || !sellingPrice) return alert('اكمل البيانات يا بطل!');
-    setLoading(true);
-
-    const { data, error } = await supabase
-      .from('products')
-      .insert([
-        { name: productName, price: parseFloat(sellingPrice), image_url: 'https://via.placeholder.com/150' }
-      ]);
-
-    if (error) {
-      alert('حصل مشكلة في الربط: ' + error.message);
-    } else {
-      alert('مبروك! المنتج نزل على الموقع والبيع بدأ 💰');
-      onBack();
-    }
-    setLoading(false);
+  const askAi = async () => {
+    if(!name) return alert('اكتب اسم المنتج أولاً عشان المساعد يعرف يحلله!');
+    setLoadingAi(true);
+    const res = await fetch('/api/ai-assistant', {
+      method: 'POST',
+      body: JSON.stringify({ productName: name }),
+    });
+    const data = await res.json();
+    setDesc(data.description);
+    setInsight(data.marketInsight);
+    setLoadingAi(false);
   };
 
   return (
-    <div style={{ background: '#000', color: '#fff', padding: '20px', minHeight: '100vh', textAlign: 'right' }}>
-      <h2 style={{ color: '#39FF14' }}>إضافة منتج حقيقي 🚀</h2>
+    <div style={{ padding: '20px', background: '#000', color: '#fff', textAlign: 'right', minHeight: '100vh' }}>
+      <h2 style={{ color: '#39FF14' }}>المساعد الذكي للتاجر 🤖</h2>
+      
       <input 
-        placeholder="اسم المنتج" 
-        onChange={(e)=>setProductName(e.target.value)}
-        style={{ width: '100%', padding: '15px', background: '#111', border: '1px solid #222', color: '#fff', borderRadius: '12px', marginBottom: '15px' }}
+        placeholder="اسم المنتج (مثلاً: ساعة يد ذكية)" 
+        onChange={(e) => setName(e.target.value)}
+        style={{ width: '100%', padding: '15px', background: '#111', border: '1px solid #333', color: '#fff', borderRadius: '12px' }}
       />
-      <input 
-        type="number" 
-        placeholder="سعر البيع" 
-        onChange={(e)=>setSellingPrice(e.target.value)}
-        style={{ width: '100%', padding: '15px', background: '#111', border: '1px solid #39FF14', color: '#fff', borderRadius: '12px', marginBottom: '20px' }}
-      />
+
       <button 
-        onClick={handlePublish}
-        disabled={loading}
-        style={{ width: '100%', background: '#39FF14', color: '#000', padding: '18px', borderRadius: '15px', fontWeight: 'bold', border: 'none', opacity: loading ? 0.5 : 1 }}
+        onClick={askAi}
+        disabled={loadingAi}
+        style={{ width: '100%', marginTop: '10px', background: 'linear-gradient(45deg, #39FF14, #00D1FF)', color: '#000', padding: '12px', borderRadius: '12px', fontWeight: 'bold', border: 'none' }}
       >
-        {loading ? 'جاري النشر...' : 'انشر واكسب 💰'}
+        {loadingAi ? 'جاري تحليل السوق والمنتج...' : '✨ توليد وصف وتسعير بالذكاء الاصطناعي'}
       </button>
-      <button onClick={onBack} style={{ width: '100%', background: 'none', color: '#888', border: 'none', marginTop: '10px' }}>رجوع</button>
+
+      {desc && (
+        <div style={{ marginTop: '20px', background: '#111', padding: '15px', borderRadius: '15px', border: '1px solid #39FF14' }}>
+          <p style={{ color: '#39FF14', fontSize: '12px' }}>💡 اقتراح الـ AI للوصف:</p>
+          <p style={{ fontSize: '14px', color: '#ccc' }}>{desc}</p>
+          <hr style={{ borderColor: '#222' }} />
+          <p style={{ color: '#00D1FF', fontSize: '12px' }}>🌍 تحليل السوق:</p>
+          <p style={{ fontSize: '14px', color: '#ccc' }}>{insight}</p>
+        </div>
+      )}
+
+      <button onClick={onBack} style={{ marginTop: '20px', color: '#888', background: 'none', border: 'none' }}>رجوع للوحة التحكم</button>
     </div>
   );
 }
