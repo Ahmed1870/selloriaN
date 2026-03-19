@@ -1,12 +1,16 @@
 "use client";
 import React from 'react';
 import { motion } from 'framer-motion';
+import StreetPulse from "../components/ui/StreetPulse";
+import MerchantLeaderboard from "../components/rankings/MerchantLeaderboard";
+import LiveMap from "../components/analytics/LiveMap";
+import MarketPulse from "../components/emergency/MarketPulse";
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen relative bg-black overflow-hidden font-sans">
+    <div className="min-h-screen relative bg-black overflow-hidden font-sans text-right" dir="rtl">
       
-      {/* 📹 فيديو الخلفية السينمائي (Cinematic Background) */}
+      {/* 📹 فيديو الخلفية */}
       <div className="absolute inset-0 z-0 opacity-40">
         <video 
           autoPlay 
@@ -17,38 +21,30 @@ export default function LandingPage() {
         >
           <source src="https://assets.mixkit.co/videos/preview/mixkit-busy-street-at-night-with-car-lights-4250-large.mp4" type="video/mp4" />
         </video>
-        {/* طبقة تدرج لضمان وضوح النص */}
         <div className="absolute inset-0 bg-gradient-to-b from-black via-black/60 to-black" />
       </div>
 
       <div className="relative z-10">
+        {/* شريط النبض العلوي */}
+        <StreetPulse />
+
         {/* Navigation */}
-import StreetPulse from "../components/ui/StreetPulse";
         <nav className="p-8 flex justify-between items-center max-w-7xl mx-auto">
           <motion.h1 
-            initial={{ x: -20, opacity: 0 }}
+            initial={{ x: 20, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             className="text-4xl font-black tracking-tighter text-gradient"
           >
             SELLORIA <span className="text-white">PRO</span>
-          </h1 >
+          </motion.h1>
           <div className="flex gap-4">
              <button className="text-white/70 hover:text-white text-sm font-bold transition-all px-4">دخول التجار</button>
-             <button className="bg-white/10 backdrop-blur-md px-6 py-2 rounded-full text-sm font-bold border border-white/20 hover:bg-white/20 transition-all text-white">ابدأ الآن</button>
+             <button className="bg-[#39FF14] text-black px-6 py-2 rounded-full text-sm font-bold hover:shadow-[0_0_20px_rgba(57,255,20,0.5)] transition-all">ابدأ الآن</button>
           </div>
         </nav>
-      <StreetPulse />
 
         {/* Hero Section */}
-import MerchantLeaderboard from "../components/rankings/MerchantLeaderboard";
-import LiveMap from "../components/analytics/LiveMap";
-
-      <MerchantLeaderboard />
-      <LiveMap />
-      <MarketPulse />
-      <MarketPulse />
-
-        <main className="max-w-7xl mx-auto px-6 pt-24 pb-48 text-center">
+        <main className="max-w-7xl mx-auto px-6 pt-24 text-center">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -76,15 +72,15 @@ import LiveMap from "../components/analytics/LiveMap";
                 <span className="relative z-10">سجل محلك مجاناً</span>
                 <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500" />
               </button>
-              
-              <button className="w-full md:w-auto bg-black/40 backdrop-blur-2xl border border-white/10 text-white px-12 py-6 rounded-3xl font-bold text-2xl hover:bg-black/60 transition-all">
-                تصفح المنتجات
-              </button>
             </div>
           </motion.div>
 
-          {/* المميزات التفاعلية */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mt-40">
+          {/* لوحة الشرف والخريطة */}
+          <MerchantLeaderboard />
+          <LiveMap />
+
+          {/* المميزات */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mt-20 pb-40">
             {[
               { title: 'كاش فوري', desc: 'استلم فلوس مبيعاتك في نفس اليوم من المندوب كاش أو فودافون كاش.', icon: '💸' },
               { title: 'حماية المرتجع', desc: 'رادار ذكي بيحذرك من "الزباين المشاغبين" قبل ما تشحن أي أوردر.', icon: '🛡️' },
@@ -92,18 +88,20 @@ import LiveMap from "../components/analytics/LiveMap";
             ].map((f, i) => (
               <motion.div 
                 key={i}
-                whileHover={{ scale: 1.05, rotate: 1 }}
+                whileHover={{ scale: 1.05 }}
                 className="bg-white/5 backdrop-blur-2xl p-10 rounded-[40px] border border-white/10 text-right group transition-all"
               >
-                <div className="text-5xl mb-8 group-hover:scale-110 transition-transform inline-block">{f.icon}</div>
-                <h3 className="text-3xl font-black mb-4 group-hover:text-[#39FF14]">{f.title}</h3>
+                <div className="text-5xl mb-8 inline-block">{f.icon}</div>
+                <h3 className="text-3xl font-black mb-4 group-hover:text-[#39FF14] transition-colors">{f.title}</h3>
                 <p className="text-gray-400 text-lg leading-relaxed">{f.desc}</p>
               </motion.div>
             ))}
           </div>
         </main>
 
-        <footer className="p-10 border-top border-white/10 text-center text-gray-600">
+        <MarketPulse />
+
+        <footer className="p-10 border-t border-white/10 text-center text-gray-600">
           <p>© 2026 Selloria Pro - صنع في الجيزة بكل فخر</p>
         </footer>
       </div>
