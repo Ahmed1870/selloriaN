@@ -38,6 +38,10 @@ export default function LandingPage() {
         </nav>
 
         {/* Hero Section */}
+import MerchantLeaderboard from "../components/rankings/MerchantLeaderboard";
+
+      <MerchantLeaderboard />
+
         <main className="max-w-7xl mx-auto px-6 pt-24 pb-48 text-center">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
