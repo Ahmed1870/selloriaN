@@ -26,6 +26,12 @@ export default function SmartFAQ() {
 
   return (
     <div className="max-w-3xl mx-auto p-8 text-right" dir="rtl">
+        <div className="bg-[#39FF14]/5 border border-[#39FF14]/20 p-4 rounded-2xl mb-8 flex items-center gap-4">
+          <span className="text-2xl">🔮</span>
+          <p className="text-[#39FF14] text-xs font-bold leading-relaxed">
+            توقع سيلوريا الذكي: الإسكندرية هتشهد ضغط مبيعات عالي بكرة بسبب ماتش المنتخب.. جهز مناديب زيادة هناك! 🇪🇬
+          </p>
+        </div>
       <h2 className="text-4xl font-black mb-12 text-center text-gradient">إزاي سيلوريا بتشغل السوق؟ 🤔</h2>
       
       <div className="space-y-4">
