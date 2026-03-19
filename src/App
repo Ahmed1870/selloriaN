@@ -1,0 +1,41 @@
+
+cat <<EOF > src/App.js
+import React from 'react';
+import { motion } from 'framer-motion';
+import SelloriaBot from './components/SelloriaBot';
+import ProductsGrid from './components/ProductsGrid';
+
+function App() {
+  return (
+    <div className="App bg-[#0a0a0a] min-h-screen text-white overflow-x-hidden">
+      {/* هيدر ترحيبي احترافي */}
+      <div className="flex flex-col items-center justify-center pt-32 px-4">
+        <motion.h1 
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+          className="text-6xl md:text-8xl font-black tracking-tighter mb-4 text-center select-none"
+        >
+          SELL<span className="text-[#39FF14] drop-shadow-[0_0_20px_rgba(57,255,20,0.6)]">ORIA</span>
+        </motion.h1>
+        <p className="text-gray-400 text-lg md:text-xl text-center max-w-2xl font-light tracking-wide">
+          مستقبل التجارة الذكية يبدأ هنا. استكشف مجموعتنا الحصرية المدعومة بالذكاء الاصطناعي.
+        </p>
+      </div>
+
+      {/* فاترينة عرض المنتجات الشفافة */}
+      <ProductsGrid />
+
+      {/* المساعد الذكي في الركن */}
+      <SelloriaBot />
+      
+      {/* إضاءات خلفية (Glow Background) */}
+      <div className="fixed top-0 left-0 w-full h-full pointer-events-none -z-10">
+        <div className="absolute top-[20%] left-[-10%] w-[500px] h-[500px] bg-[#39FF14] rounded-full blur-[180px] opacity-[0.03]"></div>
+        <div className="absolute bottom-[20%] right-[-10%] w-[500px] h-[500px] bg-[#39FF14] rounded-full blur-[180px] opacity-[0.03]"></div>
+      </div>
+    </div>
+  );
+}
+
+export default App;
