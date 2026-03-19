@@ -1,6 +1,6 @@
-import "./index.css";
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import "./index.css";
 import SelloriaBot from './components/SelloriaBot';
 import ProductsGrid from './components/ProductsGrid';
 import Admin from './components/Admin';
@@ -10,42 +10,42 @@ function App() {
   const [page, setPage] = useState('home');
 
   return (
-    <div className="App bg-[#0a0a0a] min-h-screen text-white overflow-x-hidden">
-      <nav className="fixed top-0 w-full z-40 bg-black/50 backdrop-blur-md border-b border-white/5 px-6 py-4 flex justify-between items-center">
+    <div className="App" style={{ backgroundColor: '#0a0a0a', color: 'white', minHeight: '100vh' }}>
+      {/* Navbar ثابت وفخم */}
+      <nav className="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/10 px-6 py-4 flex justify-between items-center">
         <h1 className="font-black text-xl cursor-pointer" onClick={() => setPage('home')}>
           SELL<span className="text-[#39FF14]">ORIA</span>
         </h1>
-        <div className="flex gap-4">
-          <button 
-            onClick={() => setPage('register')}
-            className="text-[10px] font-bold text-[#39FF14] border border-[#39FF14]/30 px-4 py-2 rounded-full hover:bg-[#39FF14]/10 transition-all"
-          >
-            انضم كتاجر
-          </button>
-          <button 
-            onClick={() => setPage(page === 'home' ? 'admin' : 'home')}
-            className="text-[10px] font-bold bg-white/5 px-4 py-2 rounded-full border border-white/10 hover:bg-white/10 transition-all"
-          >
-            {page === 'home' ? 'لوحة التحكم' : 'العودة للمتجر'}
-          </button>
+        <div className="flex gap-2">
+          <button onClick={() => setPage('register')} className="text-[10px] font-bold text-[#39FF14] border border-[#39FF14]/30 px-3 py-1.5 rounded-full">انضم كتاجر</button>
+          <button onClick={() => setPage('admin')} className="text-[10px] font-bold bg-white/5 px-3 py-1.5 rounded-full border border-white/10">لوحة التحكم</button>
         </div>
       </nav>
 
-      {page === 'home' && (
-        <>
-          <div className="flex flex-col items-center justify-center pt-40 px-4">
-            <motion.h1 initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-6xl md:text-8xl font-black mb-4 text-center">
-              SELL<span className="text-[#39FF14]">ORIA</span>
-            </motion.h1>
-            <p className="text-gray-400 text-center max-w-xl font-light">أكبر مول إلكتروني مدعوم بالذكاء الاصطناعي.. لكل التجار.</p>
-          </div>
-          <ProductsGrid />
-        </>
-      )}
-      {page === 'admin' && <Admin />}
-      {page === 'register' && <VendorRegister />}
+      {/* محتوى الصفحات مع إجبار الخلفية السوداء */}
+      <main className="pt-20" style={{ backgroundColor: '#0a0a0a' }}>
+        {page === 'home' && (
+          <>
+            <div className="flex flex-col items-center justify-center pt-20 px-4">
+              <h1 className="text-6xl md:text-8xl font-black mb-4 text-center">SELL<span className="text-[#39FF14]">ORIA</span></h1>
+              <p className="text-gray-400 text-center max-w-xl font-light">مستقبل التجارة الذكية لكل التجار.</p>
+            </div>
+            <ProductsGrid />
+          </>
+        )}
+        {page === 'admin' && <Admin />}
+        {page === 'register' && <VendorRegister />}
+      </main>
 
       <SelloriaBot />
+
+      {/* ستايل إجباري لقتل اللون الأبيض في أي مكان في الموقع */}
+      <style>{`
+        * { background-color: transparent !important; color: white !important; }
+        html, body, #root, .App { background-color: #0a0a0a !important; }
+        input, select, textarea { background-color: #1a1a1a !important; color: white !important; border: 1px solid #333 !important; }
+        .bg-white, .bg-slate-50, .bg-gray-100 { background-color: #0a0a0a !important; }
+      `}</style>
     </div>
   );
 }
