@@ -52,6 +52,7 @@ export default function MerchantVault() {
                 </div>
                 <div className="text-left">
                   <p className="text-[#00D1FF] font-black">{d.amount} ج.م</p>
+                <button className="bg-[#39FF14] text-black px-4 py-1 rounded-full text-[10px] font-bold ml-2">إرسال تنبيه واتساب 📱</button>
                   <button className="text-[10px] bg-white/10 px-3 py-1 rounded-full mt-1">تأكيد الاستلام</button>
                 </div>
               </div>
