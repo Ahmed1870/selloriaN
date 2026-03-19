@@ -1,36 +1,52 @@
 "use client";
 import React, { useState } from 'react';
-import Admin from '../components/Admin';
 import ProductsGrid from '../components/ProductsGrid';
-import CartDrawer from '../components/cart/CartDrawer';
-import SellerJoin from '../components/admin/SellerJoin';
-import SuperAdmin from '../components/admin/SuperAdmin';
+import Admin from '../components/Admin';
+import Auth from '../components/auth/Auth';
 
 export default function Page() {
-  const [view, setView] = useState('shop'); // shop, admin, join, superadmin
-  const [cart, setCart] = useState([]);
-  const [showCart, setShowCart] = useState(false);
+  const [view, setView] = useState('landing'); // landing, shop, admin, auth
+  const [user, setUser] = useState(null);
+
+  const LandingPage = () => (
+    <div style={{ background: '#000', minHeight: '100vh', color: '#fff', textAlign: 'center', padding: '40px 20px' }}>
+      <h1 style={{ color: '#39FF14', fontSize: '45px', fontWeight: '900', marginBottom: '10px' }}>SELLORIA PRO</h1>
+      <p style={{ color: '#888', fontSize: '18px', marginBottom: '40px' }}>حوّل محلك العادي لـ "بيزنس ذكي" في 5 دقائق 🚀</p>
+      
+      <div style={{ display: 'grid', gap: '20px', marginBottom: '40px' }}>
+        <div className="glass-card" style={{ padding: '20px' }}>
+          <h3 style={{ color: '#39FF14' }}>🤖 مساعد AI شخصي</h3>
+          <p style={{ fontSize: '14px' }}>الذكاء الاصطناعي بيكتب لك مواصفات منتجاتك وبيحلل السوق بدالك.</p>
+        </div>
+        <div className="glass-card" style={{ padding: '20px' }}>
+          <h3 style={{ color: '#00D1FF' }}>🌍 رادار المنافسين</h3>
+          <p style={{ fontSize: '14px' }}>قارن أسعارك بـ Amazon و Noon لحظة بلحظة عشان تبيع صح.</p>
+        </div>
+        <div className="glass-card" style={{ padding: '20px' }}>
+          <h3 style={{ color: '#FFD700' }}>🛒 متجر متكامل</h3>
+          <p style={{ fontSize: '14px' }}>استقبل طلبات زباينك على الواتساب فوراً وبنظام احترافي.</p>
+        </div>
+      </div>
+
+      <button 
+        onClick={() => setView('auth')}
+        style={{ width: '100%', background: '#39FF14', color: '#000', padding: '20px', borderRadius: '20px', fontSize: '18px', fontWeight: 'bold', border: 'none', boxShadow: '0 0 20px rgba(57, 255, 20, 0.4)' }}
+      >
+        ابدأ رحلة الأرباح الآن 💰
+      </button>
+
+      <p onClick={() => setView('shop')} style={{ marginTop: '20px', color: '#555', cursor: 'pointer', textDecoration: 'underline' }}>
+        تصفح المنتجات كـ "زبون" فقط
+      </p>
+    </div>
+  );
 
   return (
-    <div style={{ minHeight: '100vh', background: '#000', color: '#fff' }}>
-      <nav style={{ padding: '15px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #222' }}>
-        <h1 onClick={() => setView('shop')} style={{ color: '#39FF14', margin: 0, fontSize: '22px', fontWeight: '900', cursor: 'pointer' }}>SELLORIA</h1>
-        <div style={{ display: 'flex', gap: '8px' }}>
-           <button onClick={() => setView('join')} style={{ background: '#39FF14', color: '#000', border: 'none', padding: '6px 12px', borderRadius: '12px', fontSize: '12px', fontWeight: 'bold' }}>بيع معنا 💰</button>
-           <button onClick={() => setShowCart(true)} style={{ background: '#111', border: '1px solid #333', padding: '8px 12px', borderRadius: '12px' }}>🛒</button>
-           {/* زرار سري للدخول للوحة التحكم العليا (الضغط المطول أو ضغطة خاصة) */}
-           <button onDoubleClick={() => setView('superadmin')} style={{ background: 'none', border: 'none', color: '#222' }}>•</button>
-        </div>
-      </nav>
-
-      <main>
-        {view === 'shop' && <ProductsGrid onAddToCart={(p) => {setCart([...cart, p]); setShowCart(true);}} />}
-        {view === 'admin' && <Admin />}
-        {view === 'join' && <SellerJoin onBack={() => setView('shop')} />}
-        {view === 'superadmin' && <SuperAdmin onBack={() => setView('shop')} />}
-      </main>
-
-      {showCart && <CartDrawer cartItems={cart} onClose={() => setShowCart(false)} onRemove={(i) => setCart(cart.filter((_, idx) => idx !== i))} />}
+    <div style={{ minHeight: '100vh', background: '#000' }}>
+      {view === 'landing' && <LandingPage />}
+      {view === 'shop' && <ProductsGrid onAddToCart={() => alert('ميزة الشراء ستفعل قريباً')} />}
+      {view === 'auth' && <Auth onSession={(session) => { setUser(session); setView('admin'); }} />}
+      {view === 'admin' && <Admin />}
     </div>
   );
 }
