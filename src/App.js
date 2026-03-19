@@ -1,43 +1,26 @@
 import React, { useState } from 'react';
-import ProductsGrid from './components/ProductsGrid';
-import Admin from './components/Admin';
-import VendorRegister from './components/VendorRegister';
+import NewJoin from './components/NewJoin';
 
 function App() {
   const [page, setPage] = useState('home');
 
-  const mainStyle = {
-    backgroundColor: '#0a0a0a',
-    color: 'white',
-    minHeight: '100vh',
-    fontFamily: 'sans-serif'
-  };
-
   return (
-    <div style={mainStyle}>
-      {/* Navbar */}
-      <nav style={{ padding: '20px', borderBottom: '1px solid #222', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'sticky', top: 0, background: '#0a0a0aa0', backdropFilter: 'blur(10px)', zIndex: 100 }}>
-        <h1 onClick={() => setPage('home')} style={{ cursor: 'pointer', margin: 0, fontWeight: '900' }}>SELL<span style={{color: '#39FF14'}}>ORIA</span></h1>
-        <div style={{ display: 'flex', gap: '10px' }}>
-          <button onClick={() => setPage('register')} style={{ background: 'none', color: '#39FF14', border: '1px solid #39FF14', padding: '5px 15px', borderRadius: '20px', fontSize: '12px' }}>انضم كتاجر</button>
-          <button onClick={() => setPage('admin')} style={{ background: '#222', color: 'white', border: 'none', padding: '5px 15px', borderRadius: '20px', fontSize: '12px' }}>لوحة التحكم</button>
-        </div>
+    <div style={{ backgroundColor: '#000', color: '#fff', minHeight: '100vh', textAlign: 'center' }}>
+      <nav style={{ padding: '20px', borderBottom: '1px solid #333' }}>
+        <h1 onClick={() => setPage('home')} style={{ color: '#39FF14', cursor: 'pointer' }}>SELLORIA v3</h1>
+        <button onClick={() => setPage('join')} style={{ background: '#39FF14', color: '#000', padding: '10px 20px', borderRadius: '10px', fontWeight: 'bold' }}>انضم الآن</button>
       </nav>
 
-      {/* محتوى الصفحات */}
-      <div style={{ padding: '20px' }}>
-        {page === 'home' && (
-          <div style={{ textAlign: 'center', paddingTop: '50px' }}>
-            <h1 style={{ fontSize: '3rem', margin: 0 }}>SELL<span style={{color: '#39FF14'}}>ORIA</span></h1>
-            <p style={{ color: '#888' }}>مستقبل التجارة الذكية</p>
-            <ProductsGrid />
-          </div>
+      <div style={{ padding: '40px' }}>
+        {page === 'home' ? (
+          <h2 style={{ fontSize: '40px' }}>مرحباً بك في النسخة الجديدة ⚡</h2>
+        ) : (
+          <NewJoin />
         )}
-        {page === 'admin' && <Admin />}
-        {page === 'register' && <VendorRegister />}
       </div>
+
+      <style>{"body { background: #000 !important; margin: 0; }"}</style>
     </div>
   );
 }
-
 export default App;
