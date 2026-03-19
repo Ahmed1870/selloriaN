@@ -44,6 +44,7 @@ import LiveMap from "../components/analytics/LiveMap";
       <MerchantLeaderboard />
       <LiveMap />
       <MarketPulse />
+      <MarketPulse />
 
         <main className="max-w-7xl mx-auto px-6 pt-24 pb-48 text-center">
           <motion.div 
