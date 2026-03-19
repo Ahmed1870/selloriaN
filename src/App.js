@@ -1,25 +1,14 @@
-import React, { useState } from 'react';
-import NewJoin from './components/NewJoin';
+import React from 'react';
 
 function App() {
-  const [page, setPage] = useState('home');
-
   return (
-    <div style={{ backgroundColor: '#000', color: '#fff', minHeight: '100vh', textAlign: 'center' }}>
-      <nav style={{ padding: '20px', borderBottom: '1px solid #333' }}>
-        <h1 onClick={() => setPage('home')} style={{ color: '#39FF14', cursor: 'pointer' }}>SELLORIA v3</h1>
-        <button onClick={() => setPage('join')} style={{ background: '#39FF14', color: '#000', padding: '10px 20px', borderRadius: '10px', fontWeight: 'bold' }}>انضم الآن</button>
-      </nav>
-
-      <div style={{ padding: '40px' }}>
-        {page === 'home' ? (
-          <h2 style={{ fontSize: '40px' }}>مرحباً بك في النسخة الجديدة ⚡</h2>
-        ) : (
-          <NewJoin />
-        )}
+    <div style={{ backgroundColor: '#000', color: '#39FF14', height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', margin: 0 }}>
+      <h1 style={{ fontSize: '50px', fontWeight: '900' }}>SELLORIA BLACK</h1>
+      <p style={{ color: '#fff' }}>Version: 4.0.0 (Hard Reset)</p>
+      <div style={{ marginTop: '20px', padding: '20px', border: '2px solid #39FF14', borderRadius: '20px' }}>
+         جارٍ تحديث النظام بالكامل...
       </div>
-
-      <style>{"body { background: #000 !important; margin: 0; }"}</style>
+      <style>{"body { background-color: #000 !important; margin: 0; padding: 0; }"}</style>
     </div>
   );
 }
