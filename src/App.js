@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import "./index.css";
-import SelloriaBot from './components/SelloriaBot';
-import ProductsGrid from './components/ProductsGrid';
-import Admin from './components/Admin';
-import VendorRegister from './components/VendorRegister';
+import SelloriaBot from './Elements/SelloriaBot';
+import ProductsGrid from './Elements/ProductsGrid';
+import Admin from './Elements/Admin';
+import VendorRegister from './Elements/VendorRegister';
 
 function App() {
   const [page, setPage] = useState('home');
