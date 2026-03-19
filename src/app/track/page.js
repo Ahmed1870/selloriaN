@@ -1,64 +1,25 @@
 "use client";
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-
 export default function TrackOrder() {
-  const [phone, setPhone] = useState('');
-  const [order, setOrder] = useState(null);
-
-  const steps = [
-    { label: 'تم الاستلام', status: 'done' },
-    { label: 'تجهيز الطلب', status: 'done' },
-    { label: 'مع المندوب', status: 'active' },
-    { label: 'تم التوصيل', status: 'pending' }
-  ];
-
-  const handleTrack = () => {
-    // محاكاة سحب بيانات الأوردر من السوبابيس برقم الموبايل
-    setOrder({ id: 'SL-5092', area: 'فيصل - الطالبية' });
-  };
-
   return (
-    <div style={{ padding: '40px 20px', background: '#000', minHeight: '100vh', color: '#fff', textAlign: 'right' }}>
-      <h2 style={{ color: '#39FF14' }}>📍 رادار تتبع أوردرك</h2>
-      <p style={{ color: '#888', fontSize: '14px' }}>دخل رقم الموبايل اللي طلبت بيه عشان تعرف مكان حاجتك فين دلوقتي.</p>
-
-      <div style={{ marginTop: '30px', display: 'flex', gap: '10px' }}>
-        <input 
-          placeholder="01xxxxxxxxx" 
-          onChange={(e) => setPhone(e.target.value)}
-          style={{ flex: 1, padding: '15px', background: '#111', border: '1px solid #333', color: '#fff', borderRadius: '15px', textAlign: 'center' }} 
-        />
-        <button onClick={handleTrack} style={{ background: '#39FF14', color: '#000', padding: '15px', borderRadius: '15px', fontWeight: 'bold', border: 'none' }}>تتبع</button>
-      </div>
-
-      {order && (
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          style={{ marginTop: '40px', background: '#111', padding: '20px', borderRadius: '20px', border: '1px solid #222' }}
-        >
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
-            <span style={{ color: '#39FF14' }}>رقم الأوردر: {order.id}</span>
-            <span style={{ color: '#888' }}>{order.area}</span>
-          </div>
-
-          {steps.map((s, i) => (
-            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '20px' }}>
-              <div style={{ 
-                width: '12px', height: '12px', borderRadius: '50%', 
-                background: s.status === 'done' ? '#39FF14' : s.status === 'active' ? '#00D1FF' : '#333',
-                boxShadow: s.status === 'active' ? '0 0 10px #00D1FF' : 'none'
-              }} />
-              <div style={{ flex: 1, color: s.status === 'pending' ? '#444' : '#fff', fontSize: '14px' }}>{s.label}</div>
+    <main className="min-h-screen bg-[#050505] text-white flex flex-col items-center justify-center p-6" dir="rtl">
+      <div className="w-full max-w-lg bg-[#0a0a0a] border border-white/5 p-10 rounded-[50px] text-center relative overflow-hidden">
+        <div className="absolute top-0 right-0 p-4 bg-[#39FF14] text-black text-[8px] font-black uppercase rotate-12">Live GPS</div>
+        <h1 className="text-2xl font-black mb-10">تتبع مندوب سيلوريا 🛵</h1>
+        
+        <div className="space-y-12">
+          <div className="relative">
+            <div className="h-1 w-full bg-white/5 absolute top-1/2 -translate-y-1/2"></div>
+            <div className="h-1 w-2/3 bg-[#39FF14] absolute top-1/2 -translate-y-1/2 shadow-[0_0_15px_#39FF14]"></div>
+            <div className="flex justify-between relative z-10">
+              <span className="bg-[#39FF14] p-3 rounded-full">🏠</span>
+              <span className="bg-[#39FF14] p-3 rounded-full animate-pulse">🛵</span>
+              <span className="bg-white/10 p-3 rounded-full">🏪</span>
             </div>
-          ))}
-          
-          <button style={{ width: '100%', background: 'none', border: '1px solid #333', color: '#888', padding: '10px', borderRadius: '12px', fontSize: '12px' }}>
-            تحتاج مساعدة؟ كلم الدعم الفني 🛠️
-          </button>
-        </motion.div>
-      )}
-    </div>
+          </div>
+          <p className="text-gray-500 font-bold italic text-sm">المندوب استلم الأوردر وهو الآن في طريقه إليك..</p>
+          <button className="w-full border border-white/10 py-4 rounded-2xl text-xs font-black hover:bg-white hover:text-black transition-all">اتصل بالمندوب الآن</button>
+        </div>
+      </div>
+    </main>
   );
 }
