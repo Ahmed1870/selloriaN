@@ -4,64 +4,99 @@ import { motion } from 'framer-motion';
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen relative overflow-hidden font-sans">
-      {/* دوائر ضوئية في الخلفية */}
-      <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-green-500/10 rounded-full blur-[120px]" />
-      <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[120px]" />
-
-      {/* Hero Section */}
-      <nav className="p-6 flex justify-between items-center max-w-7xl mx-auto">
-        <h1 className="text-3xl font-black tracking-tighter text-gradient">SELLORIA <span className="text-white">PRO</span></h1>
-        <button className="glass px-6 py-2 rounded-full text-sm font-bold border-white/20 hover:bg-white/10 transition-all">تسجيل الدخول</button>
-      </nav>
-
-      <main className="max-w-7xl mx-auto px-6 pt-20 pb-40 text-center">
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
+    <div className="min-h-screen relative bg-black overflow-hidden font-sans">
+      
+      {/* 📹 فيديو الخلفية السينمائي (Cinematic Background) */}
+      <div className="absolute inset-0 z-0 opacity-40">
+        <video 
+          autoPlay 
+          muted 
+          loop 
+          playsInline
+          className="w-full h-full object-cover"
         >
-          <span className="bg-green-500/10 text-green-400 border border-green-500/20 px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase">
-            مستقبل التجارة الذكية في مصر 🇪🇬
-          </span>
-          <h2 className="text-6xl md:text-8xl font-black mt-8 mb-6 leading-tight">
-            حوّل محلك لـ <br/>
-            <span className="text-gradient">ماكينة أرباح</span>
-          </h2>
-          <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-12">
-            انضم لآلاف التجار في فيصل والهرم والجيزة، وسيطر على سوقك بذكاء اصطناعي يسبق "أمازون" بخطوات.
-          </p>
-          
-          <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
-            <button className="w-full md:w-auto bg-[#39FF14] text-black px-10 py-5 rounded-2xl font-black text-xl hover:shadow-[0_0_30px_rgba(57,255,20,0.5)] transition-all">
-              ابدأ تجربتك المجانية 🚀
-            </button>
-            <button className="w-full md:w-auto glass px-10 py-5 rounded-2xl font-bold text-xl border-white/10 hover:border-white/30 transition-all">
-              تصفح السوق
-            </button>
-          </div>
-        </motion.div>
+          <source src="https://assets.mixkit.co/videos/preview/mixkit-busy-street-at-night-with-car-lights-4250-large.mp4" type="video/mp4" />
+        </video>
+        {/* طبقة تدرج لضمان وضوح النص */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black via-black/60 to-black" />
+      </div>
 
-        {/* كروت المميزات الفخمة */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-32">
-          {[
-            { title: 'رادار المنافسين', desc: 'راقب أسعار أمازون ونون لحظياً وعدل أسعارك لتكتسحهم.', icon: '🕵️‍♂️', color: 'blue' },
-            { title: 'مساعد التسويق AI', desc: 'الذكاء الاصطناعي يكتب إعلاناتك ويصور منتجاتك باحترافية.', icon: '🤖', color: 'green' },
-            { title: 'الجمعية الرقمية', desc: 'اجمع مع تجار منطقتك واشتروا بسعر المصنع لتضاعف ربحك.', icon: '🤝', color: 'purple' }
-          ].map((feature, i) => (
-            <motion.div 
-              key={i}
-              whileHover={{ y: -10 }}
-              className="glass p-8 rounded-[30px] text-right border-white/5 relative group cursor-pointer"
-            >
-              <div className="text-4xl mb-6">{feature.icon}</div>
-              <h3 className="text-2xl font-bold mb-4 group-hover:text-[#39FF14] transition-colors">{feature.title}</h3>
-              <p className="text-gray-500 leading-relaxed">{feature.desc}</p>
-              <div className="absolute top-0 right-0 w-20 h-20 bg-white/5 blur-3xl rounded-full group-hover:bg-green-500/20 transition-all" />
-            </motion.div>
-          ))}
-        </div>
-      </main>
+      <div className="relative z-10">
+        {/* Navigation */}
+        <nav className="p-8 flex justify-between items-center max-w-7xl mx-auto">
+          <motion.h1 
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            className="text-4xl font-black tracking-tighter text-gradient"
+          >
+            SELLORIA <span className="text-white">PRO</span>
+          </h1 >
+          <div className="flex gap-4">
+             <button className="text-white/70 hover:text-white text-sm font-bold transition-all px-4">دخول التجار</button>
+             <button className="bg-white/10 backdrop-blur-md px-6 py-2 rounded-full text-sm font-bold border border-white/20 hover:bg-white/20 transition-all text-white">ابدأ الآن</button>
+          </div>
+        </nav>
+
+        {/* Hero Section */}
+        <main className="max-w-7xl mx-auto px-6 pt-24 pb-48 text-center">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="inline-flex items-center gap-2 bg-white/5 backdrop-blur-xl border border-white/10 px-6 py-2 rounded-full mb-10">
+              <span className="relative flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+              </span>
+              <span className="text-green-400 text-sm font-bold tracking-wide uppercase">الذكاء الاصطناعي متاح الآن في الجيزة</span>
+            </div>
+
+            <h2 className="text-7xl md:text-9xl font-black mb-8 tracking-tighter leading-[0.9]">
+              بيزنس أذكى <br/>
+              <span className="text-gradient">أرباح أسرع</span>
+            </h2>
+            
+            <p className="text-gray-300 text-xl md:text-2xl max-w-3xl mx-auto mb-16 leading-relaxed">
+              سيلوريا هي أول منصة في مصر بتدير محلك بالذكاء الاصطناعي.. بنسعر، بنسوق، وبنوصل بالنيابة عنك.
+            </p>
+            
+            <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
+              <button className="group relative w-full md:w-auto overflow-hidden bg-[#39FF14] text-black px-12 py-6 rounded-3xl font-black text-2xl hover:scale-105 transition-all duration-300 shadow-[0_0_50px_rgba(57,255,20,0.4)]">
+                <span className="relative z-10">سجل محلك مجاناً</span>
+                <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500" />
+              </button>
+              
+              <button className="w-full md:w-auto bg-black/40 backdrop-blur-2xl border border-white/10 text-white px-12 py-6 rounded-3xl font-bold text-2xl hover:bg-black/60 transition-all">
+                تصفح المنتجات
+              </button>
+            </div>
+          </motion.div>
+
+          {/* المميزات التفاعلية */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mt-40">
+            {[
+              { title: 'كاش فوري', desc: 'استلم فلوس مبيعاتك في نفس اليوم من المندوب كاش أو فودافون كاش.', icon: '💸' },
+              { title: 'حماية المرتجع', desc: 'رادار ذكي بيحذرك من "الزباين المشاغبين" قبل ما تشحن أي أوردر.', icon: '🛡️' },
+              { title: 'فصال ذكي', desc: 'سيب الـ AI يفاصل مع الزبون ويقنعه بالسعر المناسب بدالك.', icon: '🤝' }
+            ].map((f, i) => (
+              <motion.div 
+                key={i}
+                whileHover={{ scale: 1.05, rotate: 1 }}
+                className="bg-white/5 backdrop-blur-2xl p-10 rounded-[40px] border border-white/10 text-right group transition-all"
+              >
+                <div className="text-5xl mb-8 group-hover:scale-110 transition-transform inline-block">{f.icon}</div>
+                <h3 className="text-3xl font-black mb-4 group-hover:text-[#39FF14]">{f.title}</h3>
+                <p className="text-gray-400 text-lg leading-relaxed">{f.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </main>
+
+        <footer className="p-10 border-top border-white/10 text-center text-gray-600">
+          <p>© 2026 Selloria Pro - صنع في الجيزة بكل فخر</p>
+        </footer>
+      </div>
     </div>
   );
 }
