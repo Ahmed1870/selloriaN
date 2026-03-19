@@ -2,6 +2,7 @@
 import Hero from "../components/landing/Hero";
 import UserReviews from "../components/reviews/UserReviews";
 import SmartFAQ from "../components/support/SmartFAQ";
+import MerchantWallet from "../components/merchant/MerchantWallet";
 import SuccessPage from "../components/checkout/SuccessPage";
 import PricingPlans from "../components/billing/PricingPlans";
 import AffiliateHub from "../components/affiliate/AffiliateHub";
@@ -22,6 +23,7 @@ export default function Home() {
         <CourierDashboard />
       <UserReviews />
       <SmartFAQ />
+      <MerchantWallet balance={42500} />
       </div>
     </main>
   );
