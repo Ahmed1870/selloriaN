@@ -1,55 +1,49 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AddProductQuick from './admin/AddProductQuick';
-
-const stats = [
-  { label: 'أرباح اليوم', value: '1,250 ج.م', icon: '💰' },
-  { label: 'طلبات جديدة', value: '5', icon: '📦' },
-  { label: 'نقص في المخزن', value: '2', icon: '⚠️' }
-];
+import { supabase } from '../lib/supabaseClient';
 
 export default function Admin() {
   const [showAddForm, setShowAddForm] = useState(false);
+  const [products, setProducts] = useState([]);
 
-  if (showAddForm) {
-    return <AddProductQuick onBack={() => setShowAddForm(false)} />;
-  }
+  const fetchMyProducts = async () => {
+    const { data } = await supabase.from('products').select('*').order('created_at', { ascending: false });
+    setProducts(data || []);
+  };
+
+  useEffect(() => { fetchMyProducts(); }, [showAddForm]);
+
+  const handleDelete = async (id) => {
+    if(confirm('متأكد إنك عايز تمسح المنتج ده؟')) {
+      await supabase.from('products').delete().eq('id', id);
+      fetchMyProducts();
+    }
+  };
+
+  if (showAddForm) return <AddProductQuick onBack={() => setShowAddForm(false)} />;
 
   return (
     <div style={{ padding: '20px', color: '#fff', textAlign: 'right' }}>
-      <h2 style={{ color: '#39FF14' }}>لوحة تحكم التاجر</h2>
+      <h2 style={{ color: '#39FF14' }}>إدارة مخزنك 📦</h2>
       
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: '10px', marginBottom: '30px' }}>
-        {stats.map(s => (
-          <div key={s.label} style={{ background: '#111', padding: '15px', borderRadius: '15px', border: '1px solid #222' }}>
-            <div style={{ fontSize: '20px' }}>{s.icon}</div>
-            <div style={{ color: '#888', fontSize: '12px' }}>{s.label}</div>
-            <div style={{ fontSize: '18px', fontWeight: 'bold' }}>{s.value}</div>
-          </div>
-        ))}
-      </div>
-
-      {/* تعديل الزرار ليفتح الـ Form الجديد */}
       <button 
         onClick={() => setShowAddForm(true)}
-        style={{ width: '100%', background: '#39FF14', color: '#000', padding: '15px', borderRadius: '15px', fontWeight: 'bold', border: 'none', marginBottom: '20px', cursor: 'pointer' }}
+        style={{ width: '100%', background: '#39FF14', color: '#000', padding: '15px', borderRadius: '15px', fontWeight: 'bold', border: 'none', marginBottom: '20px' }}
       >
-        ➕ إضافة منتج جديد (بالكاميرا 📷)
+        ➕ إضافة منتج جديد
       </button>
 
-      <div style={{ background: '#111', padding: '15px', borderRadius: '15px' }}>
-        <h3 style={{ fontSize: '16px', marginBottom: '10px' }}>آخر العمليات</h3>
-        <div style={{ fontSize: '13px', color: '#ccc' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0', borderBottom: '1px solid #222' }}>
-            <span>طلب #5021</span>
-            <span style={{ color: '#39FF14' }}>+450 ج.م</span>
+      <h3 style={{ fontSize: '16px', marginBottom: '15px' }}>منتجاتك الحالية:</h3>
+      {products.map(p => (
+        <div key={p.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#111', padding: '10px', borderRadius: '12px', marginBottom: '10px', border: '1px solid #222' }}>
+          <div>
+            <div style={{ fontSize: '14px' }}>{p.name}</div>
+            <div style={{ color: '#39FF14', fontSize: '12px' }}>{p.price} ج.م</div>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0' }}>
-            <span>طلب #5020</span>
-            <span style={{ color: '#39FF14' }}>+800 ج.م</span>
-          </div>
+          <button onClick={() => handleDelete(p.id)} style={{ background: '#331111', color: '#ff4444', border: 'none', padding: '5px 10px', borderRadius: '8px', fontSize: '12px' }}>حذف 🗑️</button>
         </div>
-      </div>
+      ))}
     </div>
   );
 }
