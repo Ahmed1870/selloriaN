@@ -2,19 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  margin: 0;
+/* إجبار الخلفية السوداء على كل حاجة */
+html, body, #root, .App {
   background-color: #0a0a0a !important;
-  color: white !important;
-  font-family: 'Inter', sans-serif;
+  color: #ffffff !important;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
 }
 
-input {
+/* تصليح شكل الخانات (Inputs) */
+input, textarea, select {
   background-color: #1a1a1a !important;
   color: white !important;
   border: 1px solid #333 !important;
+  border-radius: 12px !important;
+  padding: 12px !important;
 }
 
 input::placeholder {
-  color: #666 !important;
+  color: #888 !important;
+}
+
+/* إخفاء أي خلفيات بيضاء جاية من مكتبات تانية */
+div, section, main, nav {
+  background-color: transparent;
+}
+
+/* زرار سيلوريا الأخضر المشهور */
+.btn-primary {
+  background-color: #39FF14 !important;
+  color: black !important;
+  font-weight: bold !important;
 }
