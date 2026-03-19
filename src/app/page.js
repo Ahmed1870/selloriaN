@@ -29,6 +29,12 @@ export default function LandingPage() {
         <StreetPulse />
 
         {/* Navigation */}
+      <div className="bg-white/5 border-b border-white/10 py-2 px-8 flex justify-end gap-6 text-[10px] font-bold text-gray-500">
+        <span className="hover:text-[#39FF14] cursor-pointer">مصر 🇪🇬</span>
+        <span className="hover:text-[#39FF14] cursor-pointer">السعودية 🇸🇦</span>
+        <span className="hover:text-[#39FF14] cursor-pointer">الإمارات 🇦🇪</span>
+        <span className="hover:text-[#39FF14] cursor-pointer text-white">English 🌐</span>
+      </div>
         <nav className="p-8 flex justify-between items-center max-w-7xl mx-auto">
           <motion.h1 
             initial={{ x: 20, opacity: 0 }}
