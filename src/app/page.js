@@ -1,6 +1,7 @@
 "use client";
 import Hero from "../components/landing/Hero";
 import UserReviews from "../components/reviews/UserReviews";
+import SmartFAQ from "../components/support/SmartFAQ";
 import PricingPlans from "../components/billing/PricingPlans";
 import AffiliateHub from "../components/affiliate/AffiliateHub";
 import SealOfTrust from "../components/merchant/SealOfTrust";
@@ -16,6 +17,7 @@ export default function Home() {
         <SealOfTrust />
         <CourierDashboard />
       <UserReviews />
+      <SmartFAQ />
       </div>
     </main>
   );

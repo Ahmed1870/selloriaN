@@ -2,56 +2,34 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const faqData = [
-  { 
-    q: "إزاي سيلوريا بتضمن حقي كتاجر؟", 
-    a: "عن طريق 'رادار الثقة' اللي بيفلتر الزباين، ونظام 'التحصيل الفوري' من المناديب المعتمدين في منطقتك." 
-  },
-  { 
-    q: "يعني إيه فصال ذكي بالـ AI؟", 
-    a: "ده بوت ذكي بياخد ويدي مع الزبون في السعر بناءً على 'أقل سعر' إنت محدده، عشان يقفل البيعة وأنت نايم." 
-  },
-  { 
-    q: "إزاي أسحب أرباحي من المحفظة؟", 
-    a: "بكل سهولة، تقدر تطلب سحب كاش مع أقرب مندوب أو تحويل فوري على فودافون كاش في أي وقت." 
-  },
-  { 
-    q: "لو المنتج طلع فيه عيب، إيه الحل؟", 
-    a: "عندنا 'الضمان الذهبي'؛ المندوب بيجيلك لحد البيت ياخد المرتجع ويرجعلك فلوسك كاش في أقل من 24 ساعة." 
-  }
+const faqs = [
+  { q: "إزاي أضمن حقي في التقسيط؟", a: "سيلوريا بتضمن حقك بعقد إلكتروني موثق، وبدون أي فوائد أو غرامات تأخير. إنت بتدفع النص والباقي على أسبوعين بكل أمان." },
+  { q: "التوصيل بياخد وقت قد إيه؟", a: "بفضل نظام 'طيارين سيلوريا' والـ GPS، الأوردر بيوصلك في نفس اليوم لو إنت في المحافظات الكبرى، وبحد أقصى 48 ساعة لأي مكان في مصر." },
+  { q: "هل المنتجات أصلية؟", a: "كل تاجر على سيلوريا معاه 'شهادة توثيق' وبضاعته متراجعة من السيستم بتاعنا. لو المنتج مش زي الصورة، حقك يرجعلك فوراً." }
 ];
 
 export default function SmartFAQ() {
   const [active, setActive] = useState(null);
 
   return (
-    <div className="max-w-3xl mx-auto p-8 text-right" dir="rtl">
-        <div className="bg-[#39FF14]/5 border border-[#39FF14]/20 p-4 rounded-2xl mb-8 flex items-center gap-4">
-          <span className="text-2xl">🔮</span>
-          <p className="text-[#39FF14] text-xs font-bold leading-relaxed">
-            توقع سيلوريا الذكي: الإسكندرية هتشهد ضغط مبيعات عالي بكرة بسبب ماتش المنتخب.. جهز مناديب زيادة هناك! 🇪🇬
-          </p>
-        </div>
-      <h2 className="text-4xl font-black mb-12 text-center text-gradient">إزاي سيلوريا بتشغل السوق؟ 🤔</h2>
+    <div className="max-w-4xl mx-auto py-24 px-6 text-right" dir="rtl">
+      <h2 className="text-3xl font-black mb-12 text-white italic">عندك سؤال؟ <span className="text-[#00D1FF]">سيلوريا بتجاوبك</span> 🤖</h2>
       
       <div className="space-y-4">
-        {faqData.map((item, i) => (
-          <div key={i} className="glass rounded-3xl border border-white/5 overflow-hidden">
+        {faqs.map((item, i) => (
+          <div key={i} className="bg-white/5 rounded-3xl border border-white/5 overflow-hidden">
             <button 
               onClick={() => setActive(active === i ? null : i)}
-              className="w-full p-6 text-right flex justify-between items-center hover:bg-white/5 transition-all"
+              className="w-full p-6 text-right flex justify-between items-center hover:bg-white/10 transition-all"
             >
-              <span className="text-lg font-bold text-white">{item.q}</span>
-              <span className="text-[#39FF14] text-2xl">{active === i ? '−' : '+'}</span>
+              <span className="font-bold text-gray-200">{item.q}</span>
+              <span className="text-[#00D1FF]">{active === i ? '−' : '+'}</span>
             </button>
-            
             <AnimatePresence>
               {active === i && (
                 <motion.div 
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  className="px-6 pb-6 text-gray-400 leading-relaxed"
+                  initial={{ height: 0 }} animate={{ height: 'auto' }} exit={{ height: 0 }}
+                  className="px-6 pb-6 text-sm text-gray-400 leading-relaxed"
                 >
                   {item.a}
                 </motion.div>
@@ -59,6 +37,10 @@ export default function SmartFAQ() {
             </AnimatePresence>
           </div>
         ))}
+      </div>
+      
+      <div className="mt-12 text-center">
+        <p className="text-xs text-gray-600">لسه محتار؟ ابعتلنا واتساب على <span className="text-[#39FF14] font-bold">01019672878</span> وفريقنا هيرد عليك طيارة!</p>
       </div>
     </div>
   );
