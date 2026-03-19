@@ -4,48 +4,45 @@ import { motion } from 'framer-motion';
 
 export default function Hero() {
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black text-white px-6">
-      {/* دوائر النيون الخلفية (Ambient Light) */}
-      <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-[#39FF14]/10 rounded-full blur-[120px]"></div>
-      <div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-[#00D1FF]/10 rounded-full blur-[120px]"></div>
+    <div className="relative isolate px-6 pt-32 lg:px-8 bg-black overflow-hidden" dir="rtl">
+      {/* تأثير الإضاءة الخلفية (Blur Accent) */}
+      <div className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
+        <div className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#39FF14] to-[#00D1FF] opacity-10 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" style={{ clipPath: 'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)' }}></div>
+      </div>
 
-      <div className="relative z-10 text-center max-w-5xl">
-        <motion.div 
-          initial={{ y: 30, opacity: 0 }} 
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8 }}
-        >
-          <span className="bg-white/5 border border-white/10 px-4 py-2 rounded-full text-[10px] tracking-[4px] uppercase text-[#39FF14] font-black">
-            مستقبل التجارة الذكية في مصر 🇪🇬
-          </span>
-          <h1 className="text-6xl md:text-8xl font-black mt-8 mb-6 tracking-tighter leading-none">
-            سيلوريا <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#39FF14] to-[#00D1FF]">تغزو السوق</span>
-          </h1>
-          <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-12">
-            أول منصة مصرية ذكية بتربط التجار، المناديب، والزباين بذكاء اصطناعي حقيقي. قسط حلال، شحن طلقة، وبزنس بيكبر كل ثانية.
-          </p>
-        </motion.div>
+      <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56 text-center">
+        {/* شارة العلم المصري (تظبيط الـ UI اللي فات) */}
+        <div className="mb-12 flex justify-center">
+          <div className="relative rounded-full px-4 py-2 text-xs leading-6 text-gray-400 ring-1 ring-white/10 hover:ring-white/20 bg-white/5 backdrop-blur-lg">
+            مستقبل التجارة الذكية في مصر 🇪🇬 {' '}
+            <a href="#plans" className="font-semibold text-[#39FF14] mr-2">
+              اكتشف التقسيط <span aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </div>
 
-        <motion.div 
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          className="flex flex-col md:flex-row gap-6 justify-center items-center"
-        >
-          <button className="bg-[#39FF14] text-black px-12 py-5 rounded-2xl font-black text-lg hover:shadow-[0_0_30px_#39FF14] transition-all">
+        {/* العنوان الرئيسي (The Title Masterpiece) */}
+        <h1 className="text-5xl font-black text-white sm:text-7xl tracking-tighter leading-tight mb-8">
+          سيلوريا <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#39FF14] to-[#00D1FF]">تغزو السوق</span>، <br /> وتحقق المليار.
+        </h1>
+
+        {/* النص الفرعي المقروء */}
+        <p className="text-xl font-medium text-gray-400 max-w-lg mx-auto leading-relaxed mb-16">
+          أول منصة مصرية ذكية تربط التجار، المناديب، والزبائن بذكاء اصطناعي حقيقي. قسط حلال، شحن طلقة، وبزنس بيكبر كل ثانية.
+        </p>
+
+        {/* الأزرار العصرية (The CTAs Masterpiece) */}
+        <div className="mt-10 flex items-center justify-center gap-x-6 gap-y-4 flex-wrap">
+          <motion.a
+            whileHover={{ scale: 1.05, shadow: "0px 0px 30px rgb(57,255,20)" }}
+            href="#join"
+            className="rounded-full bg-[#39FF14] px-12 py-5 text-sm font-black text-black shadow-sm transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          >
             ابدأ البيع الآن 🚀
-          </button>
-          <button className="bg-white/5 border border-white/10 text-white px-12 py-5 rounded-2xl font-black text-lg hover:bg-white/10 transition-all">
-            جرب بوت الفصال 🤖
-          </button>
-        </motion.div>
-
-        {/* إحصائيات سريعة */}
-        <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-white/5 pt-12">
-          <div><h4 className="text-2xl font-black">500+</h4><p className="text-xs text-gray-500">تاجر موثق</p></div>
-          <div><h4 className="text-2xl font-black text-[#39FF14]">24h</h4><p className="text-xs text-gray-500">دعم فني</p></div>
-          <div><h4 className="text-2xl font-black">100%</h4><p className="text-xs text-gray-500">تقسيط حلال</p></div>
-          <div><h4 className="text-2xl font-black text-[#00D1FF]">GPS</h4><p className="text-xs text-gray-500">تتبع حي</p></div>
+          </motion.a>
+          <a href="#faq" className="text-sm font-semibold leading-6 text-white hover:text-[#00D1FF] transition-all">
+            جرب بوت الفصال 🤖 <span aria-hidden="true">→</span>
+          </a>
         </div>
       </div>
     </div>
